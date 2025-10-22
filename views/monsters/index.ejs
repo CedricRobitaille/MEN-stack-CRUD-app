@@ -1,0 +1,10 @@
+<%- include("../partials/htmlHead") %>
+
+<h1>The Bestiary</h1>
+<p>A collection of monsters!</p>
+
+<ul>
+  <% monsters.forEach(monster => { %>
+    <li><a href="/monsters/<%= monster._id %>"><%= monster.name %></a></li>
+  <% })  %>
+</ul>
