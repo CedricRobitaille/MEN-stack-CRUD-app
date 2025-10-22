@@ -24,6 +24,19 @@ app.get("/", async (req, res) => {
   })
 });
 
+app.get("/monsters/new", async (req, res) => {
+  res.render("monsters/new.ejs", {
+    pageTitle: "Create a New Monster",
+  })
+})
+
+app.get('/monsters', async (req, res) => {
+  const allMonsters = await Monster.find();
+  res.render("monsters/index.ejs", {
+    pageTitle: "The Bestiary",
+    monsters: allMonsters
+  })
+})
 
 
 
@@ -31,18 +44,11 @@ app.get("/", async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+app.post("/monsters", async (req, res) => {
+  const monsterData = req.body;
+  await Monster.create(monsterData);
+  res.redirect("/monsters");
+})
 
 
 

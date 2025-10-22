@@ -4,7 +4,7 @@ const monsterSchema = new mongoose.Schema({
   name: String,
   region: String,
   background: String,
-  evil: Boolean,
+  classification: String,
 })
 
 const Monster = mongoose.model("Monster", monsterSchema);
