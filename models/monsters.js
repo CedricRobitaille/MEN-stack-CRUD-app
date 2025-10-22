@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const monsterSchema = new mongoose.Schema({
   name: String,
   region: String,
-  background: String,
+  lore: String,
   classification: String,
 })
 

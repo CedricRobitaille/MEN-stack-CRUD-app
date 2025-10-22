@@ -1,0 +1,35 @@
+<%- include("../partials/htmlHead") %>
+<%- include("../partials/nav") %>
+
+<h1>Edit <%= monster.name %></h1>
+
+<form action="/bestiary/<%= monster._id %>?_method=PUT" method="POST">
+
+<label for="name">Monster's Name</label>
+<input type="text" name="name" id="name" value="<%= monster.name %>" required>
+
+<label for="classification">Monster Classification</label>
+<select name="classification" id="classification" optional>
+  <% const classifications = ["folkloric", "supernatural", "humanoid", "construct", "undead", "dragon", "bestial", "elemental"] %>
+  <% classifications.forEach(classification => { %>
+    <% if (classification === monster.classification) { %>
+      <option value="<%= classification %>" selected>
+        <%= classification %>
+      </option>
+    <% } else { %>
+      <option value="<%= classification %>">
+        <%= classification %>
+      </option>
+    <% } %>
+  <% }) %>
+</select>
+
+<label for="region">Region</label>
+<input type="text" name="region" id="region" value="<%= monster.region %>" optional>
+
+<label for="lore">Background Information</label>
+<textarea name="lore" id="lore"><%= monster.lore %></textarea>
+
+<button type="submit">Edit Monster</button>
+
+</form>

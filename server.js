@@ -9,13 +9,15 @@ const morgan = require("morgan");
 const path = require("path");
 
 mongoose.connect(process.env.MONGODB_URI);
-
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB: ${mongoose.connection.name}.`);
 })
 
 const Monster = require("./models/monsters.js");
 app.use(express.urlencoded({ extended: false}));
+app.use(methodOverride("_method"));
+app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "public")))
 
 
 app.get("/", async (req, res) => {
@@ -24,17 +26,33 @@ app.get("/", async (req, res) => {
   })
 });
 
-app.get("/monsters/new", async (req, res) => {
-  res.render("monsters/new.ejs", {
+app.get("/bestiary/new", async (req, res) => {
+  res.render("bestiary/new.ejs", {
     pageTitle: "Create a New Monster",
   })
 })
 
-app.get('/monsters', async (req, res) => {
+app.get('/bestiary', async (req, res) => {
   const allMonsters = await Monster.find();
-  res.render("monsters/index.ejs", {
+  res.render("bestiary/index.ejs", {
     pageTitle: "The Bestiary",
-    monsters: allMonsters
+    monsters: allMonsters,
+  })
+})
+
+app.get("/bestiary/:monsterId", async (req, res) => {
+  const monsterData = await Monster.findById(req.params.monsterId);
+  res.render(`bestiary/show.ejs`, {
+    pageTitle: `${monsterData.name}`,
+    monster: monsterData,
+  });
+})
+
+app.get("/bestiary/:monsterId/edit", async (req, res) => {
+  const monsterData = await Monster.findById(req.params.monsterId);
+  res.render(`bestiary/edit.ejs`, {
+    pageTitle: `${monsterData.name}`,
+    monster: monsterData,
   })
 })
 
@@ -43,15 +61,22 @@ app.get('/monsters', async (req, res) => {
 
 
 
-
-app.post("/monsters", async (req, res) => {
+app.post("/bestiary", async (req, res) => {
   const monsterData = req.body;
+  console.log(req.body)
   await Monster.create(monsterData);
-  res.redirect("/monsters");
+  res.redirect("/bestiary");
 })
 
+app.delete("/bestiary/:monsterId", async (req, res) => {
+  await Monster.findByIdAndDelete(req.params.monsterId);
+  res.redirect("/bestiary")
+})
 
-
+app.put("/bestiary/:monsterId", async (req, res) => {
+  await Monster.findByIdAndUpdate(req.params.monsterId, req.body);
+  res.redirect(`/bestiary/${req.params.monsterId}`);
+})
 
 
 

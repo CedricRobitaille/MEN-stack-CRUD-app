@@ -1,0 +1,30 @@
+<%- include("../partials/htmlHead") %>
+<%- include("../partials/nav") %>
+
+<h1>Create a New Monster</h1>
+
+<form action="/bestiary" method="POST">
+  <label for="name">Monster's Name</label>
+  <input type="text" name="name" id="name" placeholder="Monster's Name" required>
+
+  <label for="classification">Monster Classification</label>
+  <select name="classification" id="classification" optional>
+  <% const classifications=["null", "folkloric", "supernatural" , "humanoid" , "construct" , "undead" , "dragon" , "bestial", "elemental", "none"] %>
+  <% classifications.forEach(classification => { %>
+    <% if (classification === "null") { %>
+      <option value="" selected disabled hidden>Select a Classifications</option>
+    <% } else { %>
+      <option value="<%= classification %>"><%= classification %></option>
+    <% } %>
+  <% }) %>
+  </select>
+
+  <label for="region">Region</label>
+  <input type="text" name="region" id="region" value="Global" optional>
+
+  <label for="lore">Background Information</label>
+  <textarea name="lore" id="lore" optional>AAH! A Scary Monster</textarea>
+
+  <button type="submit">Add to Bestiary</button>
+</form>
+

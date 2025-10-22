@@ -1,0 +1,11 @@
+<%- include("../partials/htmlHead") %>
+<%- include("../partials/nav") %>
+
+<form action="/bestiary/<%= monster._id %>?_method=DELETE" method="POST">
+  <button type="submit">Remove from Bestiary</button>
+</form>
+
+<a href="/bestiary/<%= monster._id %>/edit">Edit <%= monster.name %></a>
+
+<h1><%= monster.name %></h1>
+
