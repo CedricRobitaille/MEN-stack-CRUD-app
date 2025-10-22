@@ -5,6 +5,7 @@ const monsterSchema = new mongoose.Schema({
   region: String,
   lore: String,
   classification: String,
+  file: String,
 })
 
 const Monster = mongoose.model("Monster", monsterSchema);

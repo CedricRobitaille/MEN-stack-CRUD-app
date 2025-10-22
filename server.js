@@ -19,6 +19,25 @@ app.use(methodOverride("_method"));
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")))
 
+const multer = require("multer");
+
+const uploadPath = path.join(__dirname, 'public', 'images')
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Extension Name
+  }
+});
+
+const upload = multer({ storage: storage })
+
+
+
+
+
+
 
 app.get("/", async (req, res) => {
   res.render("index.ejs", {
@@ -61,10 +80,11 @@ app.get("/bestiary/:monsterId/edit", async (req, res) => {
 
 
 
-app.post("/bestiary", async (req, res) => {
-  const monsterData = req.body;
-  console.log(req.body)
-  await Monster.create(monsterData);
+app.post("/bestiary", upload.single("file"), async (req, res, next) => {
+  const image = req.file ? req.file.filename : null;
+  req.body.file = image;
+
+  await Monster.create(req.body);
   res.redirect("/bestiary");
 })
 
@@ -73,7 +93,14 @@ app.delete("/bestiary/:monsterId", async (req, res) => {
   res.redirect("/bestiary")
 })
 
-app.put("/bestiary/:monsterId", async (req, res) => {
+app.put("/bestiary/:monsterId", upload.single("file"), async (req, res) => {
+  const image = req.file ? req.file.filename : null;
+  if (image != null) {
+    req.body.file = image;
+  } else {
+    delete req.body.file;
+  }
+  
   await Monster.findByIdAndUpdate(req.params.monsterId, req.body);
   res.redirect(`/bestiary/${req.params.monsterId}`);
 })

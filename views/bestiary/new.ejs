@@ -3,7 +3,26 @@
 
 <h1>Create a New Monster</h1>
 
-<form action="/bestiary" method="POST">
+<form action="/bestiary" method="POST" enctype="multipart/form-data">
+
+  <label for="file">Upload a Photo</label>
+  <div class="image-preview">
+    <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg, img/svg">
+  </div>
+
+  <script>
+    const input = document.getElementById("file");
+    const imagePreview = document.querySelector(".image-preview");
+    
+    const updateImageDisplay = () => {
+      const imageUrl = URL.createObjectURL(input.files[0])
+      imagePreview.style.backgroundImage = `url(${imageUrl})`;
+    }
+
+    // Change event found in (https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file)
+    input.addEventListener("change", updateImageDisplay)
+  </script>
+
   <label for="name">Monster's Name</label>
   <input type="text" name="name" id="name" placeholder="Monster's Name" required>
 
@@ -21,6 +40,7 @@
 
   <label for="region">Region</label>
   <input type="text" name="region" id="region" value="Global" optional>
+
 
   <label for="lore">Background Information</label>
   <textarea name="lore" id="lore" optional>AAH! A Scary Monster</textarea>
