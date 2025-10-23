@@ -41,7 +41,7 @@ nav {
 
   color: var(--white);
   top: -5rem;
-  animation: navAnimateIn 3s cubic-bezier(0.19, 1, 0.22, 1) forwards 1s;
+  animation: navAnimateIn 3s cubic-bezier(0.19, 1, 0.22, 1) forwards;
   pointer-events: none;
 }
 
