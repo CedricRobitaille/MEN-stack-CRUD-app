@@ -1,11 +1,39 @@
 <%- include("../partials/htmlHead") %>
 <%- include("../partials/nav") %>
 
-<form action="/bestiary/<%= monster._id %>?_method=DELETE" method="POST">
-  <button type="submit">Remove from Bestiary</button>
-</form>
+<%- include("../partials/background") %>
+<main class="flex-center">
+  
+  <div class="monster-details">
 
-<a href="/bestiary/<%= monster._id %>/edit">Edit <%= monster.name %></a>
+    <div class="monster-buttons">
+      <form action="/bestiary/<%= monster._id %>?_method=DELETE" method="POST">
+        <button type="submit">Remove from Bestiary</button>
+      </form>
+    
+      <a href="/bestiary/<%= monster._id %>/edit">Edit <%= monster.name %></a>
+    </div>
 
-<h1><%= monster.name %></h1>
+    <% if (!monster.file) { %>
+      <img src="/images/placeholder.svg" alt="" class="pfp">
+    <% } else { %>
+      <img src="/images/<%= monster.file %>" alt="" class="pfp">
+    <% } %>
+    <div class="specifications">
+      <% if (monster.region) { %>
+        <p><%= monster.region %></p>
+      <% } %>
+      <% if (monster.classification) { %>
+        <p><%= monster.classification %></p>
+      <% } %>
+    </div>
+    <h1 class="monster-name"><%= monster.name %></h1>
+    <% if (monster.lore) { %>
+      <p class="lore"><%= monster.lore %></p>
+    <% } %>
+
+  </div>
+  
+</main>
+
 

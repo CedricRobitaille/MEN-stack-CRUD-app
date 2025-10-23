@@ -1,14 +1,20 @@
 <%- include("../partials/htmlHead") %>
 <%- include("../partials/nav") %>
 
-<h1>Create a New Monster</h1>
+<%- include("../partials/background") %>
+
+<main class="form-page">
+
+<h1 class="title-banner">Create a New Monster</h1>
 
 <form action="/bestiary" method="POST" enctype="multipart/form-data">
 
-  <label for="file">Upload a Photo</label>
+  
   <div class="image-preview">
-    <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg, img/svg">
+    <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg, image/svg, image/webp">
+    <label for="file" class="file-image"></label>
   </div>
+  <label for="file" class="file-label" class="basic-label">Upload a Photo</label>
 
   <script>
     const input = document.getElementById("file");
@@ -17,16 +23,22 @@
     const updateImageDisplay = () => {
       const imageUrl = URL.createObjectURL(input.files[0])
       imagePreview.style.backgroundImage = `url(${imageUrl})`;
+      imagePreview.classList.remove("placeholder")
     }
 
     // Change event found in (https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file)
     input.addEventListener("change", updateImageDisplay)
+
+    window.onload = () => {
+      imagePreview.style.backgroundImage = `url("/images/placeholder.svg")`;
+      imagePreview.classList.add("placeholder");
+    }
   </script>
 
-  <label for="name">Monster's Name</label>
+  <label for="name" class="basic-label">Monster's Name</label>
   <input type="text" name="name" id="name" placeholder="Monster's Name" required>
 
-  <label for="classification">Monster Classification</label>
+  <label for="classification" class="basic-label">Monster Classification</label>
   <select name="classification" id="classification" optional>
   <% const classifications=["null", "folkloric", "supernatural" , "humanoid" , "construct" , "undead" , "dragon" , "bestial", "elemental", "none"] %>
   <% classifications.forEach(classification => { %>
@@ -38,13 +50,16 @@
   <% }) %>
   </select>
 
-  <label for="region">Region</label>
+  <label for="region" class="basic-label">Region</label>
   <input type="text" name="region" id="region" value="Global" optional>
 
 
-  <label for="lore">Background Information</label>
+  <label for="lore" class="basic-label">Background Information</label>
   <textarea name="lore" id="lore" optional>AAH! A Scary Monster</textarea>
 
-  <button type="submit">Add to Bestiary</button>
+  <button type="submit" class="basic-button">Add to Bestiary</button>
 </form>
+  
+</main>
+
 

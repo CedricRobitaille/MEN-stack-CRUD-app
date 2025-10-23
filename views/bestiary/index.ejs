@@ -4,16 +4,34 @@
 <%- include("../partials/background") %>
 
 <main>
-<h1>The Bestiary</h1>
-<p>A collection of monsters!</p>
 
-<a href="/bestiary/new">Add a Monster</a>
+<section class="horizontal-scroll">
+  <ul class="bestiary-list">
+    <% monsters.forEach(monster=> { %>
+      <a href="/bestiary/<%= monster._id %>" class="monster-card">
+        <% if (monster.file) { %>
+          <img src="/images/<%= monster.file %>" alt="">
+        <% } else { %>
+          <img src="/images/placeholder.svg" class="placeholder" alt="">
+        <% } %>
+        <li><%= monster.name %></li>
+      </a>
+      <% }) %>
+  </ul>
+</section>
 
-<ul class="bestiary-list">
-  <% monsters.forEach(monster=> { %>
-    <a href="/bestiary/<%= monster._id %>" class="monster-card">
-      <li><%= monster.name %></li>
-    </a>
-  <% }) %>
-</ul>
+<script>
+  const monsters = document.querySelectorAll(".monster-card");
+  const monsterCount = monsters.length;
+  const scrollSize = monsterCount * 50;
+
+  const scrollContainer = document.querySelector(".horizontal-scroll");
+  const bestiaryList = document.querySelector(".bestiary-list");
+
+  scrollContainer.style.height = `${scrollSize}vh`;
+  bestiaryList.style.width = `${scrollSize}vw`;
+  document.documentElement.style.setProperty('--bestiary-width', `-${scrollSize + 40}vw`);
+
+</script>
+
 </main>

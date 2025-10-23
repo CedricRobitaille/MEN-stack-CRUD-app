@@ -1,57 +1,62 @@
 <%- include("../partials/htmlHead") %>
 <%- include("../partials/nav") %>
 
-<h1>Edit <%= monster.name %></h1>
+<%- include("../partials/background") %>
 
-<form action="/bestiary/<%= monster._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+<main class="form-page">
 
-<label for="file">Upload a Photo</label>
-<div class="image-preview" file="<%= monster.file %>">
-  <input type="file" name="file" id="file"" accept="image/png, image/jpeg, image/jpg, img/svg">
-</div>
+  <h1 class="title-banner">Edit <%= monster.name %></h1>
+  
+  <form action="/bestiary/<%= monster._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+  
+    
+    <div class="image-preview" file="<%= monster.file %>">
+      <label for="file" class="file-image"> </label>
+      <input type="file" name="file" id="file" accept=" image/png, image/jpeg, image/jpg, image/svg, image/webp">
+    </div>
+    <label for="file" class="file-label">Upload a Photo</label>
+  
+    <script>
+      const input = document.getElementById("file");
+      const imagePreview = document.querySelector(".image-preview");
+      if (imagePreview.hasAttribute("file")) {
+        const file = imagePreview.getAttribute("file");
+        imagePreview.style.backgroundImage = `url(/images/${file})`;
+      }
 
-<script>
-  const input = document.getElementById("file");
-  const imagePreview = document.querySelector(".image-preview");
-  if (imagePreview.hasAttribute("file")) {
-    const file = imagePreview.getAttribute("file");
-    imagePreview.style.backgroundImage = `url(/images/${file})`;
-  }
+      const updateImageDisplay = () => {
+        const imageUrl = URL.createObjectURL(input.files[0])
+        imagePreview.style.backgroundImage = `url(${imageUrl})`;
+      }
 
-  const updateImageDisplay = () => {
-    const imageUrl = URL.createObjectURL(input.files[0])
-    imagePreview.style.backgroundImage = `url(${imageUrl})`;
-  }
+      // Change event found in (https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file)
+      input.addEventListener("change", updateImageDisplay)
+    </script>
+  
+    <label for="name" class="basic-label">Monster's Name</label>
+    <input type="text" name="name" id="name" value="<%= monster.name %>" required>
+  
+    <label for="classification" class="basic-label">Monster Classification</label>
+    <select name="classification" id="classification" optional>
+    <% const classifications=["folkloric", "supernatural" , "humanoid" , "construct" , "undead" , "dragon" , "bestial", "elemental" ] %>
+    <% classifications.forEach(classification=> { %>
+      <% if (classification===monster.classification) { %>
+        <option value="<%= classification %>" selected><%= classification %></option>
+      <% } else { %>
+        <option value="<%= classification %>"><%= classification %></option>
+      <% } %>
+    <% }) %>
+    </select>
+  
+    <label for="region" class="basic-label">Region</label>
+    <input type="text" name="region" id="region" value="<%= monster.region %>" optional>
+  
+    <label for="lore" class="basic-label">Background Information</label>
+    <textarea name="lore" id="lore"><%= monster.lore %></textarea>
+  
+    <button type="submit" class="basic-button">Save Changes</button>
+  
+  </form>
 
-  // Change event found in (https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file)
-  input.addEventListener("change", updateImageDisplay)
-</script>
+</main>
 
-<label for="name">Monster's Name</label>
-<input type="text" name="name" id="name" value="<%= monster.name %>" required>
-
-<label for="classification">Monster Classification</label>
-<select name="classification" id="classification" optional>
-  <% const classifications = ["folkloric", "supernatural", "humanoid", "construct", "undead", "dragon", "bestial", "elemental"] %>
-  <% classifications.forEach(classification => { %>
-    <% if (classification === monster.classification) { %>
-      <option value="<%= classification %>" selected>
-        <%= classification %>
-      </option>
-    <% } else { %>
-      <option value="<%= classification %>">
-        <%= classification %>
-      </option>
-    <% } %>
-  <% }) %>
-</select>
-
-<label for="region">Region</label>
-<input type="text" name="region" id="region" value="<%= monster.region %>" optional>
-
-<label for="lore">Background Information</label>
-<textarea name="lore" id="lore"><%= monster.lore %></textarea>
-
-<button type="submit">Edit Monster</button>
-
-</form>
