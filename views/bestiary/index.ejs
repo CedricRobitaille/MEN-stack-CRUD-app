@@ -1,13 +1,19 @@
 <%- include("../partials/htmlHead") %>
 <%- include("../partials/nav") %>
 
+<%- include("../partials/background") %>
+
+<main>
 <h1>The Bestiary</h1>
 <p>A collection of monsters!</p>
 
 <a href="/bestiary/new">Add a Monster</a>
 
-<ul>
-  <% monsters.forEach(monster => { %>
-    <li><a href="/bestiary/<%= monster._id %>"><%= monster.name %></a></li>
-  <% })  %>
+<ul class="bestiary-list">
+  <% monsters.forEach(monster=> { %>
+    <a href="/bestiary/<%= monster._id %>" class="monster-card">
+      <li><%= monster.name %></li>
+    </a>
+  <% }) %>
 </ul>
+</main>

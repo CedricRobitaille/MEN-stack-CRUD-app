@@ -1,18 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300..700;1,300..700&family=Ledger&display=swap');
+
 :root {
-  --bg: #f1f1f1;
+  --bg: #0c0c0c;
+  --red: #e41414;
+  --white: #cfc8c8;
+  --grey: #9c9696;
 }
 
 * {
   box-sizing: border-box;
+  font-family: "Ledger", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 html {
-  background-color: var(--bg)
+  background-color: var(--bg);
+  position: relative;
+  overflow: hidden;
 }
 
 body {
   padding: 0;
   margin: 0;
+}
+
+li {
+  list-style: none;
 }
 
 nav {
@@ -23,4 +37,138 @@ nav {
   border-bottom: 1px solid #222;
   box-shadow: 0px 6px 22px -8px rgba(20,20,20,.125);
   margin-bottom: 1rem;
+  transition: 1s;
 }
+
+#horror-bg {
+  position: fixed;
+  z-index: -10;
+  width: 110vw;
+  height: 110vh;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  transition: 2s ease-out;
+  object-fit: cover;
+  filter: brightness(.45) grayscale(.25) contrast(1.05);
+}
+
+
+
+svg {
+  display: none;
+}
+
+main {
+  position: relative;
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;
+
+}
+
+#title-container {
+  position: absolute;
+  width: 85vw;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 6rem;
+  color: var(--red);
+  text-shadow: 0px 4px 22px rgba(0,0,0,.25);
+}
+
+#title-container h1 {
+  font-size: 12rem;
+  line-height: 12rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5rem;
+  margin: 0;
+  padding: 0;
+
+  color: rgba(255, 19, 19, 0.65);
+  font-family: "Cormorant Infant", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: italic;
+}
+
+#title-container a {
+  position: relative;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 1.75rem;
+  letter-spacing: 4px;
+  padding: 2rem 1.75rem 0rem;
+  transition: 2s;
+  color: var(--white);
+  text-shadow: 0px 0px 42px rgba(234, 225, 225, 0.65);
+}
+
+#title-container a:hover {
+  letter-spacing: 12px;
+  padding: .75rem 1.75rem 1.25rem;
+  color: #fff;
+  text-shadow: 0px 0px 52px rgba(234, 225, 225, 0.85);
+}
+
+#title-container a::after {
+content: "";
+position: absolute;
+display: block;
+bottom: -.25rem;
+left: 50%;
+transform: translateX(-50%);
+height: .2rem;
+width: 0rem;
+background-color: var(--white);
+transition: 1.25s;
+transition-delay: .35s;
+}
+#title-container a:hover::after {
+  width: 7rem;
+  bottom: 1.5rem;
+  color: #fff;
+}
+
+.align-bottom {
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  font-size: 1.25rem;
+  color: rgba(156, 150, 150, .75);
+}
+
+.bestiary-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.monster-card {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  height:6rem;
+  background-color: #fff;
+}
+
+footer {
+  display: none;
+}
+
+
+

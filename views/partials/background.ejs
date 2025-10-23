@@ -1,0 +1,24 @@
+<img src="images/forest-bg.jpg" alt="" id="horror-bg">
+
+
+
+
+<script>
+  const bgElem = document.getElementById("horror-bg");
+  document.addEventListener("mousemove", (event) => {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    const moveStrength = (windowHeight + windowWidth) / 2 / 100 * 1.25; // 2.5vw + 2.5vh / 2;
+
+    console.log(moveStrength)
+    // normalize mouse pos
+    const xPos = (event.clientX / windowWidth - .5) * 2;
+    const yPos = (event.clientY / windowHeight - .5) * 2;
+
+    const translateX = -xPos * moveStrength;
+    const translateY = -yPos * moveStrength;
+
+    bgElem.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px))`;
+  })
+</script>

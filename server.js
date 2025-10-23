@@ -41,7 +41,7 @@ const upload = multer({ storage: storage })
 
 app.get("/", async (req, res) => {
   res.render("index.ejs", {
-    pageTitle: "Home",
+    pageTitle: "The Bestiary Compendium",
   })
 });
 
@@ -104,8 +104,6 @@ app.put("/bestiary/:monsterId", upload.single("file"), async (req, res) => {
   await Monster.findByIdAndUpdate(req.params.monsterId, req.body);
   res.redirect(`/bestiary/${req.params.monsterId}`);
 })
-
-
 
 
 
