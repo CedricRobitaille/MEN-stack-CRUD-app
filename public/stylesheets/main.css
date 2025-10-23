@@ -261,7 +261,7 @@ transition-delay: .35s;
   height: 50vh;
   width: 400vw; /* one vw per panel */
 
-  transform: translateX(75vw) translateY(-50%);
+  transform: translateX(48rem) translateY(-50%);
 
   animation: horizontal-move linear forwards;
   animation-timeline: --scroll;
@@ -271,7 +271,7 @@ transition-delay: .35s;
 
 @keyframes horizontal-move {
   from {
-    transform: translateX(75vw);
+    transform: translateX(48rem);
   }
 
   to {
@@ -280,7 +280,7 @@ transition-delay: .35s;
 }
 
 .monster-card {
-  flex: 0 0 50vw;
+  flex: 0 0 48rem;
   height: 66vh;
   display: flex;
   flex-direction: column;
